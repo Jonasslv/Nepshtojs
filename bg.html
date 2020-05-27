@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Canvas的奇妙冒险</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <style type="text/css">
+        #main {
+            width: 1920px;
+            /*Set to whatever*/
+            height: 1080px;
+            /*Set to whatever*/
+        }
+    </style>
+</head>
+
+<body id="main">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <img id="bg" src="1298340871_preview_neptune.jpeg" class="hidden" alt="The Scream" width="1920" height="1080">
+    <canvas id="cvs" width="1920" height="1080"></canvas>
+    <script>
+        var cvs = document.getElementById("cvs");
+        var ctx = cvs.getContext("2d");
+        var bg = document.getElementById("bg");
+
+        var loop = function() {
+                render();
+                setTimeout(loop, 1000);
+        };
+        setTimeout(loop, 1000);
+
+
+        function render() {
+            var actual_JSON;
+            $.getJSON( 'http://localhost/stats.json', function(data) {
+                actual_JSON = data;
+                ctx.clearRect(0, 0, cvs.width, cvs.height);
+            ctx.drawImage(bg, 0, 0);
+            ctx.font = "20pt Sans";
+            ctx.fillStyle = "#ffffff";
+
+            if(actual_JSON.GPU.length >3){
+                actual_JSON.GPU = actual_JSON.GPU.substring(0,3).trim();
+            }else{
+                actual_JSON.GPU = actual_JSON.GPU.substring(0,2).trim();
+            }
+            if(actual_JSON.UPTIME.length > 2){
+                actual_JSON.UPTIME = actual_JSON.UPTIME.substring(0,actual_JSON.UPTIME.length-1)+"h";
+            }else{
+                actual_JSON.UPTIME = actual_JSON.UPTIME+"m";  
+            }
+            actual_JSON.CPUT = actual_JSON.CPUT.substring(1);
+            actual_JSON.CPUT = actual_JSON.CPUT.substring(0,actual_JSON.UPTIME.length-3);
+            function fnReproduzEspaco(times){
+                let i = 0;
+                let str = "";
+                for(i=0;i<times;i++){
+                    str = str+" ";
+                }
+                return str;
+            }
+            
+
+            ctx.fillText("UPTIME", 1600, 180);     ctx.fillText(actual_JSON.UPTIME, 1760, 180);
+            ctx.fillText("CPU", 1600, 240);      ctx.fillText(actual_JSON.CPU+"%", 1760, 240);
+            ctx.fillText("CPUT", 1600, 270);       ctx.fillText(actual_JSON.CPUT+"Cº", 1760, 270);
+            ctx.fillText("MEM", 1600, 300);       ctx.fillText((actual_JSON.TOTALMEM-actual_JSON.FREEMEM)+"/"+actual_JSON.TOTALMEM, 1760, 300);
+            ctx.fillText("GPU", 1600, 360);      ctx.fillText(actual_JSON.GPU+"%", 1760, 360);
+            ctx.fillText("GPUT", 1600, 390);       ctx.fillText(actual_JSON.GPUT+"Cº", 1760, 390);
+            ctx.fillText("UPLOAD", 1600, 450);    ctx.fillText(actual_JSON.Up+"K/s", 1760, 450);
+            ctx.fillText("DOWNLOAD", 1600, 480);ctx.fillText(actual_JSON.Down+"K/s", 1760, 480);
+            ctx.fillText("KERNEL", 1600, 540);       ctx.fillText(actual_JSON.KERNEL, 1720, 540);
+
+            });
+        }
+       
+
+    </script>
+
+</body>
+
+</html>
