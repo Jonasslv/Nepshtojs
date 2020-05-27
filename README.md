@@ -6,7 +6,7 @@ Webpage that get info from an Linux system and draw with canvas.
 1. bg.html : The webpage witch use HTML5 and canvas to draw in the screen.
 2. systemdata.sh : The shell script who get system information and turn into json.
 3. stats.json : The JSON file made with the shell script.
-4. sp.sh : Shell script made to control spotify using D-BUS.
+4. sp.sh : Shell script made to control spotify using D-BUS. Credits: mrpdaemon
 5. Images that are resources for the webpage.
 
 # How to use:
