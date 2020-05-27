@@ -12,6 +12,7 @@ Webpage that get info from an Unix system and draw with canvas.
 # How to use:
 
 You need to setup an apache server on your machine and put bg.html there and the image files of canvas, make sure your systemdata is generating the stats.json on the apache folder too, you can make a service for it but unfortunally the spotify plugin will not work in recent versions of spotify when runing as service.
+
 Usage: In this first version I use it as my wallpaper. I run an Webkit browser on low level in my screen and pass the website as default page, on the future I want to make a full solution for this project (Webkit + Apache installation).
 
 Image:
